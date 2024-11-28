@@ -1,0 +1,70 @@
+syntax = "v1"
+
+type (
+    createAssetFileReq {
+        Pid int64 `json:"pid,optional"`                                    //文件目录 默认从1开始
+        Source int64 `json:"source"`                                       //来源 1TDriver2云上传3Telegram
+        AssetName string `json:"asset_name"`                               //资源名称
+        AssetSize int64 `json:"asset_size,optional"`                       //资源大小
+        Path string `json:"path,optional"`                                 //文件路径
+    }
+    createAssetFileResp {
+        Id string `json:"id"`                                             //id
+    }
+    uploadFileReq {
+        Flie []byte `json:"file,optional"`                                  //文件
+        Id string `json:"id,optional"`                                      //资源id
+        AssetName string `json:"asset_name,optional"`                       //资源名称
+        AssetSize int64 `json:"asset_size,optional"`                        //资源大小
+    }
+    retryReq {
+        Id string `form:"id"`
+    }
+    listReq {
+        Status []int64 `json:"status"`                   //状态 1禁用2进行中3完成4失败
+        IsAdd bool `json:"is_add,optional"`              //查询最近添加的
+        Page int64 `json:"page,optional"`
+        Size int64 `json:"size,optional"` 
+    }
+    AssetFile {
+        Id string `json:"id"`                                        //id
+        AssetId int64 `json:"asset_id"`                              //资源id
+        Uid int64 `json:"uid"`                                       //uid
+        Cid string `json:"cid"`                                      //资源id
+        AssetName string `json:"asset_name"`                         //资源名称
+        AssetSize int64 `json:"asset_size"`                          //资源大小
+        AssetType int64 `json:"asset_type"`                          //1文件夹2文件3视频4图片
+        Completion int64 `json:"completion"`                         //完成度
+        Source int64 `json:"source"`                                 //来源 1TDriver2云上传3Telegram
+        Status int64 `json:"status"`                                 //状态 1禁用2进行中3完成4失败5空间不足
+        CreatedTime int64 `json:"created_time"`                      //上传时间
+        IsTag int64 `json:"is_tag"`                                  //是否标记
+        Url string `json:"url"`                                      //链接
+        UploadErr string `json:"upload_err"`                         //上传失败原因
+        IsDelete int64 `json:"is_delete"`                            //是否删除
+        ImgBase64 string `json:"img_base64"`                         //图片base64
+        UrlList []string `json:"url_list"`                           //文件链接
+    }
+    listRes {
+        Total int64 `json:"total"`
+        list []*AssetFile `json:"list"`
+    }
+    delTransmissionReq {
+        Id []string `json:"id"`
+        IsSource bool `json:"is_source"` // 是否删除源文件
+    }
+    isTagAssetFileReq {
+        Id string `json:"id"`                        //id
+        AssetId int64 `json:"asset_id"`              //资源id
+        IsTag int64 `json:"is_tag"`                  //是否标记 1是2否
+    }
+    updateTransmissionReq {
+        Id string `json:"id"`
+        Err string `json:"err"` // 错误信息
+    }
+    assetCallbackReq {
+        Id string `json:"id"`     // id
+        Cid string `json:"cid"`   // 资源id
+        Link string `json:"link"` //链接地址
+    }
+)

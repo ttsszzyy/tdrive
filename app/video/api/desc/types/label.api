@@ -1,0 +1,53 @@
+syntax = "v1"
+
+type (
+    Response {
+
+    }
+    labelListReq {
+        Vid int64 `form:"vid"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size"`
+    }
+    Label {
+        Lid string `json:"lid"`
+        LabelUserId string `json:"label_user_id"`
+        Vid int64 `json:"vid"`
+        Uid int64 `json:"uid"`
+        Title string `json:"title"`
+        Likes bool `json:"likes"`
+        NoLikes bool `json:"no_likes"`
+        LikesNum int64 `json:"likes_num"`
+        NoLikesNum int64 `json:"no_likes_num"`
+        CreatedTime int64 `json:"created_time"`
+    }
+    labelListResp {
+        List []*Label `json:"list"`
+        Total int64 `json:"total"`
+    }
+    labelAddReq {
+        Vid int64 `json:"vid"`
+        Title string `json:"title"`
+    }
+    labelAddResp {
+        Repeat bool `json:"repeat"`
+    }
+    labelUserLikeReq {
+        LabelUserId string `json:"label_user_id,optional"`
+        Lid string `json:"lid"`
+        Likes bool `json:"likes,optional"`      // 1:点赞，0：取消点赞
+        NoLikes bool `json:"no_likes,optional"` // 1：点踩，0：取消点踩
+    }
+    labelUserLikeResp {
+        Lid string `json:"lid"`
+        LabelUserId string `json:"label_user_id"`
+        Vid int64 `json:"vid"`
+        Uid int64 `json:"uid"`
+        Title string `json:"title"`
+        Likes bool `json:"likes"`
+        NoLikes bool `json:"no_likes"`
+        LikesNum int64 `json:"likes_num"`
+        NoLikesNum int64 `json:"no_likes_num"`
+        CreatedTime int64 `json:"created_time"`
+    }
+)

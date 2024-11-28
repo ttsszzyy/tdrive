@@ -1,0 +1,101 @@
+syntax = "v1"
+
+type (
+    ParameterReq {
+        Id int64 `json:"id"`                              //id
+        ParamType int64 `json:"param_type"`               //参数类型
+        Name string `json:"name"`                         //名称
+        Desc string `json:"desc"`                         //描述
+        Value string `json:"value"`                       //值
+        BackupValue int64 `json:"backup_value,optional"`  //备份值
+    }
+    updateParameterReq {
+        parms []*ParameterReq `json:"parms"` //item
+    }
+    queryParameterReq {
+        ParamType int64 `form:"param_type,optional"` //参数类型
+    }
+    Dict {
+        Id int64 `json:"id"`                     //id
+        ParamType int64 `json:"param_type"`      //参数类型
+        Name string `json:"name"`                //名称
+        Desc string `json:"desc"`                //描述
+        Value string `json:"value"`              //值
+        BackupValue int64 `json:"backup_value"`  //备份值
+    }
+    queryParameterResp {
+        DictList []*Dict `json:"dict_list"` //dict
+    }
+    Markup {
+        Button string `json:"button,optional"`              //按钮名称
+        Url string `json:"url,optional"`                    //按钮url
+        CallbackData string `json:"callback_data,optional"` //按钮回调数据
+    }
+    sendPhotoReq {
+        ChatID string `json:"chat_id,optional"`                     //发送用户的标识或者是群组标识@群名称
+        Photo []byte `json:"photo,optional"`                        //图片地址 前端不需要传入
+        Caption string `json:"caption,optional"`                    //描述 最多0-1024 个字符
+        ReplyMarkup [][]Markup `json:"reply_markup,optional"`       //按钮
+        FileSize int64 `json:"file_size,optional"`                  //文件大小 前端不需要传入
+        IsPinChatMessage bool `json:"is_pin_chat_message,optional"` //是否频道置顶
+    }
+    delBotPinReq {
+        Id int64 `json:"id"`   //id
+        ChatID int64 `json:"chat_id"`
+        MsgID int64 `json:"msg_id"`
+    }
+    botPinListReq {
+        ChatID int64 `form:"chat_id,optional"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size"`
+    }
+    BotPin {
+        Id int64 `json:"id"`
+        ChatID int64 `json:"chat_id"`
+        MsgID int64 `json:"msg_id"`
+        Text string `json:"text"`
+    }
+    botPinListResp {
+        Total int64 `json:"total"`
+        List []*BotPin `json:"list"`
+    }
+    delAllBotPinReq {
+        ChatID int64 `json:"chat_id"`
+    }
+    delBotCommandReq {
+        Id int64 `json:"id"`
+    }
+    addBotCommandReq {
+        BotCommand string `json:"bot_command,optional"`                  //命令
+        Description string `json:"description,optional"`                 //描述 最多0-1024 个字符
+        Photo []byte `json:"photo,optional"`                             //图片地址 前端不需要传入
+        Text string `json:"text,optional"`                               //文本
+        SendType int64 `json:"send_type,optional"`                       //类型 1回调 2文本 3是动画 4是图片
+        ReplyMarkup [][]Markup `json:"reply_markup,optional"`            //按钮
+        LanguageCode string `json:"language_code,optional"`                               //语言
+    }
+    botCommandListReq {
+        BotCommand string `form:"bot_command,optional"` //命令
+        Description string `form:"description,optional"`
+        Text string `form:"txst,optional"`
+        SendType int64 `form:"send_type,optional"`      //类型 1文本 2图片
+        LanguageCode string `form:"language_code,optional"`                               //语言
+        Page int64 `form:"page"`
+        Size int64 `form:"size"`
+    }
+    BotCommand {
+        Id int64 `json:"id"`
+        BotCommand string `json:"bot_command"`
+        Description string `json:"description"`
+        Text string `json:"text"`
+        Stauts int64 `json:"stauts"`
+        SendType int64 `json:"send_type"`
+        LanguageCode string `json:"language_code"`                               //语言
+        CreateTime int64 `json:"create_time"`
+        UpdateTime int64 `json:"update_time"`
+    }
+    botCommandListResp {
+        Total int64 `json:"total"`
+        List []*BotCommand `json:"list"`
+    }
+)

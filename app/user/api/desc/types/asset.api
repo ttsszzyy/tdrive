@@ -1,0 +1,143 @@
+syntax = "v1"
+
+type (
+    uploadReq {
+        Flie []byte `json:"file,optional"`                                 //文件
+        Id int64 `json:"id,optional"`                                      //资源id
+        AssetName string `json:"asset_name,optional"`                      //资源名称
+        AssetSize int64 `json:"asset_size,optional"`                       //资源大小
+    }
+    inTransitReq {
+        Status []int64 `json:"status"`                   //状态 1禁用2进行中3完成4失败
+        IsAdd bool `json:"is_add,optional"`              //查询最近添加的
+    }
+    InTransit {
+        Id int64 `json:"id"`                                        //id
+        Uid int64 `json:"uid"`                                      //uid
+        Cid string `json:"cid"`                                     //资源id
+        TransitType int64 `json:"transit_type"`                     //上传类型 1上传文件夹2上传文件3云链接 4TG 5X 6TK 7种子
+        AssetName string `json:"asset_name"`                        //资源名称
+        AssetSize int64 `json:"asset_size"`                         //资源大小
+        AssetType int64 `json:"asset_type"`                         //1文件夹2文件3视频4图片
+        Completion int64 `json:"completion"`                        //完成度
+        Source int64 `json:"source"`                                //来源 1TDriver2云上传3Telegram
+        Status int64 `json:"status"`                                //状态 1禁用2进行中3完成4失败5空间不足
+        CreatedTime int64 `json:"created_time"`                     //上传时间
+        IsTag int64 `json:"is_tag"`                                 //是否标记
+        Url string `json:"url"`                                     //链接
+        UploadErr string `json:"upload_err"`                        //上传失败原因
+    }
+    inTransitRes {
+        list []*InTransit `json:"list"`
+    }
+    cloudDownloadReq {
+        Id int64 `json:"id"`                           //id
+    }
+    cloudDownloadResp {
+        Flie []byte `json:"file,optional"`             //文件
+        AssetName string `json:"asset_name"`           //资源名称
+        AssetSize int64 `json:"asset_size"`            //资源大小
+    }
+    AssetItem {
+        Id int64 `json:"id"`                             //id
+        Uid int64 `json:"uid"`                           //用户id
+        Cid string `json:"cid"`                          //资源id
+        Url string `json:"url"`                          //链接
+        TransitType int64 `json:"transit_type"`          //上传类型 1上传文件夹2上传文件3云链接 4TG 5X 6TK 7种子
+        AssetName string `json:"asset_name"`             //资源名称
+        AssetSize int64 `json:"asset_size"`              //资源大小
+        AssetType int64 `json:"asset_type"`              //1文件夹2文件3视频4图片
+        CreatedTime int64 `json:"created_time"`          //上传时间
+        Pid int64 `json:"pid"`                           //文件目录
+        Pname string `json:"pname"`                      //文件目录名称
+        UpdatedTime int64 `json:"updated_time"`          //修改时间
+        DeletedDay int `json:"deleted_day"`              //多少天后删除
+        IsTag int64 `json:"is_tag"`                      //是否标记
+        Source int64 `json:"source"`                     //来源 1TDriver2云上传3Telegram
+        Status int64 `json:"status"`                     //状态 1禁用2进行中3完成4失败
+        IsReport int64 `json:"is_report"`                //是否举报 1是2否
+        ErrTip string `json:"err_tip"`                   //错误提示
+        IsDefault int64 `json:"is_default"`              //是否默认 1是0否
+    }
+    documentRes {
+        Total int64 `json:"page"` // 页码
+        AssetItems []*AssetItem `json:"asset_items"`
+    }
+    documentReq {
+        AssetName string `json:"asset_name,optional"`                   //资源名称
+        Pid int64 `json:"pid,optional"`                                 //文件目录 根目录从1开始
+        IsTag int64 `json:"is_tag,optional"`                            //是否标记
+        IsDel bool `json:"is_del,optional"`                             //查询回收站
+        AssetTypes []int64 `json:"asset_types,optional"`                //资源类型 1文件夹2文件3视频4图片
+        Page int64 `json:"page,optional"`
+        Size int64 `json:"size,optional"`
+        Order int64 `json:"order,optional"`                             //排序 0创建时间1修改时间2文件大小3文件名
+        Sort int64 `json:"sort,optional"`                               //升序还是降序 0降序1升序
+        IsAdd bool `json:"is_add,optional"`                             //查询最近添加的
+    }
+    isTagReq {
+        Id int64 `json:"id"`
+        IsTag int64 `json:"is_tag"`                 //是否标记 1是2否
+    }
+    rnameReq {
+        Id int64 `json:"id"`
+        AssetName string `json:"asset_name"` //资源名称
+    }
+    moveReq {
+        Ids []int64 `json:"ids"`
+        Pid int64 `json:"pid"` //文件目录
+    }
+    copyReq {
+        Ids []int64 `json:"ids"`
+        Pid int64 `json:"pid"` //文件目录
+    }
+    delReq {
+        Ids []int64 `json:"ids"`
+    }
+    createFolderReq {
+        Pid int64 `json:"pid"`                                  //文件目录 根目录从1开始
+        Source int64 `json:"source"`                            //来源 1TDriver2云上传3Telegram
+        TransitType int64 `json:"transit_type,optional"`        //上传类型 1上传文件夹2上传文件3云链接 4TG 5X 6TK 7种子
+        AssetName string `json:"asset_name,optional"`           //资源名称
+    }
+    cloudLinkReq {
+        Id int64 `json:"id,optional"`                               //id 上传失败传入
+        Pid int64 `json:"pid"`                                      //文件目录 默认从1开始
+        Source int64 `json:"source"`                                //来源 1TDriver2云上传3Telegram
+        TransitType int64 `json:"transit_type,optional"`            //上传类型 1云链接 2TG 3X 4TK 5种子
+        Link []string `json:"link,optional"`                        //链接
+        AssetName []string `json:"asset_name,optional"`             //资源名称
+        AssetSize []int64 `json:"asset_size,optional"`              //资源大小
+    }
+    reportReq {
+        Cid string `json:"cid"`
+        ReportType int64 `json:"report_type"` //举报类型 1色情2恐怖3暴力4虐待
+    }
+    defaultRes {
+        Id int64 `json:"id"`                  //默认文件id
+        AssetName string `json:"asset_name"`  //默认文件名称
+    }
+    assetsInfoReq {
+        Id int64 `form:"id"`                  //资源id
+    }
+    assetIdsReq {
+        Ids []int64 `json:"ids"`
+    }
+    saveAssetsReq {
+        Ids []int64 `json:"ids"`              //资源ids
+    }
+    saveAssetsResp {
+        Id int64 `json:"id"`                     //保存文件夹的id
+        AssetName string `json:"asset_name"`     //保存文件夹的名称
+    }
+    createAssetsReq {
+        Pid int64 `json:"pid,optional"`                                    //文件目录 默认从1开始
+        Source int64 `json:"source"`                                       //来源 1TDriver2云上传3Telegram
+        TransitType int64 `json:"transit_type,optional"`                   //上传类型 1上传文件夹2上传文件3云链接 4TG 5X 6TK 7种子
+        AssetName string `json:"asset_name"`                               //资源名称
+        AssetSize int64 `json:"asset_size,optional"`                       //资源大小
+    }
+    createAssetsResp {
+        Id int64 `json:"id"`                  //资源id
+    }
+)

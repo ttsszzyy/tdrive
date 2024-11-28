@@ -1,0 +1,145 @@
+syntax = "v1"
+
+
+type (
+    loginReq {
+        recommendCode string `json:"recommend_code,optional"` //推荐码
+        isShare int64 `json:"is_share,optional"`              //是否是分享登录 1是
+    }
+    LoginResp {
+        IsNew bool `json:"is_new"`                                 //是否新用户
+        titanToken string `json:"titan_token"`                     //titan token
+        exp int64 `json:"exp"`                                     //有效期
+    }
+
+    renewalReq {
+        token string `json:"token"`
+    }
+    renewalResp {
+        titanToken string `json:"titan_token"`                     //titan token
+        exp int64 `json:"exp"`                                     //有效期
+    }
+)
+
+type (
+    Request {
+    }
+    Response {
+    }
+)
+
+type (
+    UserRes {
+        Uid int64 `json:"uid"`
+        Name string `json:"name"`                     //用户名
+        Avatar string `json:"avatar"`                 //头像
+        Integral int64 `json:"integral"`              //积分
+        Storage int64 `json:"storage"`                //存储空间
+        StorageUse int64 `json:"storage_use"`         //使用存储空间
+        LanguageCode string `json:"language_code"`    //语言代码 zh和en
+        IsTips bool `json:"is_tips"`                  // 是否提示
+        IsRead bool `json:"is_read"`
+    }
+    guideRewardReq {
+        Year int `form:"year"`//年限
+    }
+    guideReq {
+        LuckyPoints int64 `json:"lucky_points"`          //幸运积分
+    }
+    guideRewardRes {
+        Uid int64 `json:"uid"`                           //uid
+        Year float64 `json:"year"`                           //档位
+        Top int64 `json:"top"`                           //排名
+        YearPoints int64 `json:"year_points"`            //年份积分
+        LuckyPoints int64 `json:"lucky_points"`          //幸运积分
+        TgPoints int64 `json:"tg_points"`                //tg会员奖励积分
+        NewUser  int64 `json:"new_user"`                 // 新用户固定积分
+    }
+    bindUserWalletReq {
+
+    }
+)
+
+
+type (
+    Racking {
+        Uid int64 `json:"uid"`
+        Name string `json:"name"`        //用户名
+        Serial int64 `json:"serial"`     //序号
+        Integral int64 `json:"integral"` //积分
+    }
+    rackingListReq {
+        Page int64 `form:"page"`
+        Size int64 `form:"size"`
+    }
+    rackingListRes {
+        Rackings []*Racking `json:"rackings"`//列表
+        Total int64 `json:"total"`
+        Racking *Racking `json:"racking"`    //自己
+    }
+)
+
+type (
+    DictItem {
+        Id int64 `json:"id"`                                 //id
+        ParamType int64 `json:"parm_type"`                   //类型 1注册奖励 2引荐奖励 3活动规则 4其他设置
+        Name string `json:"name"`                            //字典名称
+        Code string `json:"code"`                            //code
+        Value string `json:"value"`                          //积分
+        BackupValue int64 `json:"backup_value"`              //多少G空间
+        Status bool `json:"status"`                          //状态 0未完成 1完成
+    }
+    userRecommendPlanRes {
+        Url string `json:"url"`                            //邀请链接
+        DictItems []*DictItem `json:"dict_items"`          //引荐奖励
+        ActivityRule string `json:"activity_rule"`         //活动规则
+        Describe string `json:"describe"`                  //描述
+        RewardPoints int64 `json:"reward_points"`          //奖励积分
+        Total int64 `json:"total"`                         //朋友总数
+        List []*Friend `json:"list"`                       //朋友列表
+    }
+    Friend {
+        Uid int64 `json:"uid"`                               //用户id
+        Name string `json:"name"`                            //用户名
+        Points int64 `json:"points"`                         //积分
+        RewardPoints int64 `json:"reward_points"`            //奖励积分
+        CreatedTime int64 `json:"created_time"`              //引荐时间
+    }
+    rewardListReq {
+        Page int64 `form:"page"`
+        Size int64 `form:"size"`
+    }
+    Reward {
+        Uid int64 `json:"uid"`                  //用户id
+        Name string `json:"name"`               //用户名
+        Source int64 `json:"source"`            //来源
+        CreatedTime int64 `json:"created_time"` //引荐时间
+    }
+    rewardListRes {
+        UserTotal int64 `json:"user_total"`       //已经引荐用户总数
+        PointsTotal int64 `json:"points_total"`   //已经获得积分
+        StorageTotal int64 `json:"storage_total"` //已经获得空间
+        Rewards []*Reward `json:"rewards"`        //列表
+        Total int64 `json:"total"`                //总数
+    }
+    claimRewardResp {
+        RewardPoints int64 `json:"reward_points"` //奖励积分
+    }
+    SetLanguageReq {
+        LanguageCode string `json:"language_code"`    //语言代码 zh和en
+    }
+)
+
+type (
+    receivePointsReq {
+        Lon string `json:"lon"`
+        Lat string `json:"lat"`
+    }
+    MsgResponse {
+        Status bool `json:"status"`
+        Msg    string `json:"msg"`
+    }
+    GuideResponse {
+        IsReceive bool `json:"is_receive"`
+    }
+)

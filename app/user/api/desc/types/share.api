@@ -1,0 +1,49 @@
+syntax = "v1"
+type (
+    queryShareReq {
+        Page int64 `form:"page"` // 页码
+        Size int64 `form:"size"` // 条数
+    }
+    Share {
+        Id int64 `json:"id"`
+        UId int64 `json:"uid"`
+        AssetIds []int64 `json:"asset_ids"`     //资源ids
+        AssetName string `json:"asset_name"`    //文件名
+        AssetSize int64 `json:"asset_size"`     //文件大小
+        assetType int64 `json:"asset_type"`     //2文件3视频4图片
+        Link string `json:"link"`               //链接
+        Status int64 `json:"status"`            //有效期状态 0永久有效 1已失效 2快到期
+        IsPass bool `json:"is_pass"`            //是否有密码
+        day int `json:"day"`                    //剩余多少天到期
+        ReadNum int64 `json:"read_num"`         //阅览数量
+        SaveNum int64 `json:"save_num"`         //保存数量
+        CreatedTime int64 `json:"created_time"` //创建时间
+    }
+    queryShareResp {
+        Shares []*Share `json:"shares"`        //shares
+        Total int64 `json:"page"`              // 页码
+    }
+    delShareReq {
+        Id int64 `json:"id"`
+    }
+    setPassReq {
+        Id int64 `json:"id"`
+        Pass string `json:"pass"`
+    }
+    setTimeReq {
+        Id int64 `json:"id"`
+        Day int `json:"day"` //有效时间
+    }
+    addShareReq {
+        Ids []int64 `json:"ids"` //资源ids
+    }
+    addShareResp {
+        Link string `json:"link"`               //链接
+    }
+    getShareReq {
+        Id int64 `form:"id"`
+    }
+    getShareURLReq {
+        UUID string `path:"uuid"`
+    }
+)

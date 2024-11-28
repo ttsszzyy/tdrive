@@ -1,0 +1,51 @@
+syntax = "proto3";
+package pb;
+option go_package = "./pb";
+
+message SendBotMsgRequest {
+  string text = 1; //发送的消息
+  int64 chatID = 2; //发送用户id
+}
+message SendBotMsgResponse {
+}
+message Item {
+  string  Button = 1; //按钮
+  string  Url = 2; //链接
+  string  CallbackData = 3; //回调数据
+}
+message Markup {
+  repeated Item markup = 1;
+}
+message SendPhotoRequest {
+  string chatId = 2; //发送用户id或者频道名称
+  bytes photo = 1; //图片
+  string  caption = 3; //描述
+  repeated Markup  replyMarkup = 4;
+  bool isPinChatMessage = 5;
+}
+message DelPinMsgReq {
+  int64 chatID = 1; //发送用户id
+  int64 msgID = 2; //消息id
+}
+message DelAllPinMsgReq {
+  int64 chatID = 1;
+}
+message DelPinMsgResp {
+  bool isSuccess = 1;
+}
+message BotCommand {
+  string command = 1; //命令
+  string description = 2; //描述
+}
+message SendBotCommandReq {
+  repeated BotCommand botCommand = 1;
+}
+service tgbot {
+  //文本发送
+  rpc SendBotMsg(SendBotMsgRequest) returns (SendBotMsgResponse);
+  //发送pin消息
+  rpc SendPhoto(SendPhotoRequest) returns (SendBotMsgResponse);
+  rpc DelPinMsg(DelPinMsgReq) returns (DelPinMsgResp);
+  rpc DelAllPinMsg(DelAllPinMsgReq) returns (DelPinMsgResp);
+  rpc SendBotCommand(SendBotCommandReq) returns (DelPinMsgResp);
+}

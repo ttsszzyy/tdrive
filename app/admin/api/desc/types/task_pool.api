@@ -1,0 +1,38 @@
+syntax = "v1"
+type (
+    addTaskPoolReq{
+        TaskType int64 `json:"task_type"` //任务类型 1入职2探索3邀请4奖励
+        TaskName string `json:"task_name"` //任务名
+        Url string `json:"url"` //链接
+        Integral int64 `json:"integral"` //奖励积分
+    }
+    updateTaskPoolReq{
+        Id int64 `json:"id"` //id
+        TaskType int64 `json:"task_type"` //任务类型 1入职2探索3邀请4奖励
+        TaskName string `json:"task_name"` //任务名
+        Integral int64 `json:"integral"` //奖励积分
+        IsDisable int64 `json:"is_disable"` //是否禁用 1禁用2启用
+    }
+    deleteTaskPoolReq{
+        Id int64 `from:"id"` //id
+    }
+
+    queryTaskPoolReq{
+        TaskType int64 `form:"task_type,optional"` //任务类型
+        TaskName string `form:"task_name,optional"` //任务名
+        Page int64 `form:"page"` // 页码
+        Size int64 `form:"size"` // 条数
+    }
+    TaskPool{
+        Id int64 `json:"id"` //id
+        TaskType int64 `json:"task_type"` //任务类型
+        TaskName string `json:"task_name"` //任务名
+        Integral int64 `json:"integral"` //奖励积分
+        CreatedTime int64 `json:"created_time"` //创建时间
+        UpdatedTime int64 `json:"updated_time"` //修改时间
+    }
+    queryTaskPoolRes {
+        Count int64 `json:"count"` //总条数
+        TaskPools []*TaskPool `json:"task_pools"`
+    }
+)

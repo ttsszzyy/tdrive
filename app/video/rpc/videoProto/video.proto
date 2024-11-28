@@ -1,0 +1,200 @@
+syntax = "proto3";
+package pb;
+option go_package = "./videoPb";
+
+message GetVideoListReq {
+  string title = 1;
+  int64 page = 2;
+  int64 size = 3;
+  string desc = 4;
+  int64 status = 5;
+  repeated int64 ids = 6;
+}
+message Video {
+  int64 id = 1;
+  int64 uid = 8;
+  string title = 2;
+  string desc = 3;
+  string filePath = 4;
+  int64 status = 5; //状态 1禁用2进行中3完成4失败
+  int64 createdTime = 6;
+  int64 updatedTime = 7;
+  string url = 10;
+  string cid = 9;
+}
+message VideoResponse {
+}
+
+message GetVideoListResp {
+  repeated Video videoList = 1;
+  int64 total = 2;
+}
+message CreateVideoReq {
+  int64 uid = 1;
+  string title = 2;
+  string desc = 3;
+  string filename = 4;
+  int64 status = 5; //状态 1禁用2进行中3完成4失败
+}
+message CreateVideoResp {
+  int64 id = 1;
+}
+message DeleteVideoReq {
+  int64 id = 1;
+}
+message UpdateVideoReq {
+  int64 id = 1;
+  string title = 2;
+  string desc = 3;
+  string filePath = 4;
+  string cid = 5;
+  string url = 6;
+  int64 status = 7; //状态 1禁用2进行中3完成4失败
+}
+message CreateLabelReq {
+  string title = 1;
+  int64 vid = 2;
+  int64 uid = 3;
+}
+message GetLabelListReq {
+  int64 vid = 1;
+  int64 page = 2;
+  int64 size = 3;
+  string id = 4;
+}
+message VideosLabel {
+  string title = 1;
+  string id = 2;
+  int64 vid = 3;
+  int64 createdTime = 4;
+  int64 uid = 5;
+}
+message GetLabelListResp {
+  repeated VideosLabel list = 1;
+  int64 total = 2;
+}
+message SaveLabelUserReq {
+  string id = 1;
+  string lid = 2; //标签id
+  int64 uid = 3; //用户id
+  bool likes = 4; //点赞
+  bool noLikes = 5; //点踩
+}
+message GetLabelUserReq {
+  repeated string lid = 1;
+  int64 uid = 2;
+  string id = 3;
+}
+message VideosLabelUser {
+  string id = 1;
+  string lid = 2;
+  int64 uid = 3;
+  bool likes = 4;
+  bool noLikes = 5;
+  int64 createdTime = 6;
+}
+message GetLabelUserResp {
+  repeated VideosLabelUser list = 1;
+}
+message CountLabelUserReq {
+  repeated string lid = 1;
+}
+message CountLabelUserItem {
+  string lid = 1;
+  int64 likesNum = 2;
+  int64 noLikesNum = 3;
+}
+message CountLabelUserResp {
+  repeated CountLabelUserItem list = 1;
+}
+message CreateCommentReq {
+  int64 vid = 1;
+  int64 uid = 2;
+  string content = 3;
+}
+message GetCommentListReq {
+  int64 vid = 1;
+  int64 page = 2;
+  int64 size = 3;
+  int64 uid = 4;
+}
+message VideosComment {
+  string id = 1;
+  int64 vid = 2;
+  int64 uid = 3;
+  string content = 4;
+  int64 createdTime = 5;
+  int64 ReplyCount = 6;
+}
+message GetCommentListResp {
+  repeated VideosComment list = 1;
+  int64 total = 2;
+}
+message CreateReplyReq {
+  int64 vid = 1;
+  int64 toUserId = 2;
+  string content = 3;
+  string commentId = 4;
+  int64 fromUserId = 5;
+}
+message CreateReplyResp {
+  string id = 1;
+  int64 createdTime = 2;
+  int64 toUserId = 3;
+  string content = 4;
+  string commentId = 5;
+  int64 fromUserId = 6;
+}
+message GetReplyListReq {
+  string commentId = 1;
+  int64 page = 2;
+  int64 size = 3;
+  int64 toUserid = 4;
+}
+message VideosReply {
+  string id = 1;
+  int64 toUserId = 3;
+  string content = 4;
+  string commentId = 5;
+  int64 fromUserId = 6;
+  int64 createdTime = 7;
+}
+message GetReplyListResp {
+  repeated VideosReply list = 1;
+  int64 total = 2;
+}
+message SaveLabelUserResp {
+  string id = 1;
+}
+message GetOneLabelReq {
+  string id = 1;
+}
+message GetOneLabelUserReq {
+  string id = 1;
+}
+message CreateLabelResp {
+  bool repeat = 1;
+}
+
+service video {
+  //视频
+  rpc CreateVideo(CreateVideoReq) returns (CreateVideoResp);
+  rpc UpdateVideo(UpdateVideoReq) returns (VideoResponse);
+  rpc DeleteVideo(DeleteVideoReq) returns (VideoResponse);
+  rpc GetVideoList(GetVideoListReq) returns (GetVideoListResp);
+  //标签
+  rpc CreateLabel(CreateLabelReq) returns (CreateLabelResp);
+  rpc GetLabelList(GetLabelListReq) returns (GetLabelListResp);
+  rpc GetOneLabel(GetOneLabelReq) returns (VideosLabel);
+  //标签点赞
+  rpc SaveLabelUser(SaveLabelUserReq) returns (SaveLabelUserResp);
+  rpc GetLabelUser(GetLabelUserReq) returns (GetLabelUserResp);
+  rpc GetOneLabelUser(GetOneLabelUserReq) returns (VideosLabelUser);
+  rpc CountLabelUser(CountLabelUserReq) returns (CountLabelUserResp);
+  //评论
+  rpc CreateComment(CreateCommentReq) returns (VideoResponse);
+  rpc GetCommentList(GetCommentListReq) returns (GetCommentListResp);
+  //回复评论
+  rpc CreateReply(CreateReplyReq) returns (CreateReplyResp);
+  rpc GetReplyList(GetReplyListReq) returns (GetReplyListResp);
+}

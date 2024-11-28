@@ -1,0 +1,830 @@
+syntax = "proto3";
+package pb;
+option go_package = "./pb";
+
+message UidReq {
+  int64 uid = 1; // 用户id
+}
+message Response {
+}
+message User {
+  int64 id = 1;
+  int64 uid = 2;
+  string name = 3;
+  string avatar = 4;
+  string mail = 5;
+  string walletAddress = 6;
+  int64 distribution = 7;
+  int64 source = 8;  //用户来源 1邀请2分享
+  string recommendCode = 9; //推荐码
+  int64 pid = 10;
+  int64 isDisable = 11;
+  int64 createdTime = 12;
+  int64 updatedTime = 13;
+  int64 puid = 20;
+  int64 isReceive = 22; //'是否领取奖励 0未领取 1已领取',
+  string languageCode = 21;
+  int64 isRead = 23; // 是否已阅读 1已阅读
+}
+message UserCodeReq {
+  string code = 1; // code
+}
+message FindTaskReq {
+  int64 uid = 1; // 用户id
+  repeated int64 taskPoolId = 2; // 任务池id
+}
+
+message Task {
+  int64 id = 1; // id
+  int64 uid = 2; // uid
+  int64 finishTime = 3; // 完成时间
+  int64 createdTime = 4;
+  int64 updatedTime = 5;
+  int64 taskPoolId = 6; // 任务池id
+}
+
+message TaskResp {
+  int64 total = 1;
+  repeated Task tasks = 2;
+}
+
+message SaveTaskReq {
+  int64 taskPoolId = 1;
+  int64 uid = 2; // uid
+}
+message UserList {
+  int64 total = 1;
+  repeated User users = 2;
+}
+message SaveShareReq {
+  int64 uid = 1;
+  string assetName = 3;
+  int64 assetSize = 4;
+  string link = 5;
+  int64 effectiveTime = 6;
+  int64 assetType = 7;
+  string assetIds = 8;
+  string uuid = 9;
+}
+message UpdateShareReq {
+  int64 id = 1;
+  string password = 2;
+  int64 effectiveTime = 3;
+  int64 readNum = 4;
+  int64 saveNum = 5;
+}
+message FindShareReq {
+  int64 uid = 1;
+  int64 page = 2;
+  int64 size = 3;
+}
+message Share {
+  int64 id = 1;
+  int64 uid = 2;
+  repeated int64 assetIds = 3;
+  string assetName = 4;
+  int64 assetSize = 5;
+  int64 assetType = 6;
+  string link = 7;
+  int64 effectiveTime = 8;
+  int64 readNum = 9;
+  int64 saveNum = 10;
+  int64 createdTime = 11;
+  string password = 12;
+  string Uuid = 13;
+  int64 deletedTime = 14;
+}
+message FindShareResp {
+  repeated Share shares = 2;
+  int64 total = 1;
+}
+message FindOneShareReq {
+  int64 id = 1;
+  string uuid = 2;
+}
+message SaveAssetsReq {
+  int64 uid = 1;
+  string cid = 2;
+  string assetName = 3;
+  int64 assetSize = 4;
+  int64 assetType = 5; //1文件夹2文件3视频4图片
+  int64 transitType = 6; //上传类型 1上传文件夹2上传文件3云链接 4TG 5X 6TK 7种子
+  int64 isTag = 7;
+  int64 pid = 8;
+  int64 source = 9; //积分来源 1本地上次2云上传
+  int64 status = 10; //状态 1禁用2进行中3完成4失败5空间不足
+}
+message UpdateAssetsNameReq {
+  int64 id = 1;
+  string assetName = 2;
+  int64 isTag = 3; //是否标记 1是2否
+  int64 status = 4; //状态 1禁用2进行中3完成4失败5空间不足
+  string cid = 5;
+  int64 assetSize = 6;
+  int64 isReport = 7; //是否举报 1是2否
+  int64 reportType = 8; //举报类型 1色情2恐怖3暴力4虐待
+  string link = 9; //链接
+}
+message UpdateAssetsMoveReq {
+  repeated int64 ids = 1;
+  int64 pid = 2;
+}
+message UpdateAssetsCopyReq {
+  repeated int64 ids = 1;
+  int64 pid = 2;
+  repeated string cids = 3;
+}
+message DelAssetsReq {
+  repeated int64 ids = 1;
+  int64 uid = 2;
+}
+message FindAssetsReq {
+  int64 pid = 1;
+  string assetName = 2;
+  int64 page = 3;
+  int64 size = 4;
+  int64 uid = 5;
+  string cid = 6;
+  repeated int64 ids = 7;
+  int64 isTag = 8;
+  bool isDel = 9;
+  repeated int64 status = 10;
+  int64 order = 11; //0是创建时间1是更新时间2是大小3assetName
+  int64 startTime = 12; //开始时间
+  int64 endTime = 13; //结束时间
+  int64 isReport = 14; //是否举报 1是2否
+  int64 sort = 15; //0降序1升序
+  repeated int64 assetTypes = 16; //1文件夹2文件3视频4图片
+  bool isAdd = 17; //查询最近添加
+}
+message Assets {
+  int64 id = 10;
+  int64 uid = 1;
+  string cid = 2;
+  string assetName = 3;
+  int64 assetSize = 4;
+  int64 assetType = 5; //1文件夹2文件3视频4图片
+  int64 transitType = 6; //上传类型 1上传文件夹2上传文件3云链接 4TG 5X 6TK 7种子
+  int64 isTag = 7;
+  int64 pid = 8;
+  int64 source = 9; //积分来源 1本地上次2云上传
+  int64 createdTime = 11;
+  int64 updatedTime = 12;
+  int64 deletedTime = 13;
+  int64 status = 14; //状态 1禁用2进行中3完成
+  int64 isReport = 15; //是否举报 1是2否
+  int64 reportType = 16; //举报类型 1色情2恐怖3暴力4虐待
+  string link = 17; //链接
+  int64 isDefault = 18; //是否默认 是否默认 1是0否
+}
+message FindAssetsResp {
+  int64 total = 1;
+  repeated Assets assets = 2;
+}
+message FindOneAssetsReq {
+  int64 id = 1;
+  string cid = 2;
+  int64 uid = 4;
+  int64 isDefault = 3;
+  string assetName = 5;
+  int64 assetType = 6; //1文件夹2文件3视频4图片
+}
+message UpdateAssetsStatusReq {
+  string cid = 1;
+  int64 status = 2;
+}
+message SaveAssetsResp {
+  int64 id = 1;
+}
+message DelUserReq {
+  int64 uid = 1;
+}
+message SignInTaskResp {
+  int64 integral = 1;
+}
+message SaveMessageReq{
+  int64 id = 6;
+  int64 uid = 1;
+  string name = 2;
+  int64 puid = 3;
+  int64 status = 4;
+  string remark = 5;
+}
+message DelMessageReq {
+  int64 id = 1;
+}
+message FindMessageReq {
+  int64 puid = 1;
+  int64 page = 2;
+  int64 size = 3;
+}
+message MessageItem {
+  int64 id = 1;
+  int64 uid = 2;
+  string name = 3;
+  int64 puid = 4;
+  int64 status = 5;
+  string remark = 6;
+  int64 createdTime = 7;
+  int64 updatedTime = 8;
+}
+message FindMessageResp {
+  int64 total = 1;
+  repeated MessageItem messages = 2;
+}
+message FindUserByPidReq {
+  int64 pid = 1;
+  int64 puid = 2;
+}
+message FindOneTaskReq {
+  int64 id = 1;
+  int64 uid = 2;
+  int64 taskPoolId = 3;
+  int64 createdTime = 4;
+}
+message UpdateTaskReq {
+  int64 id = 1;
+  int64 finishTime = 2;
+  int64 updatedTime = 3;
+}
+message CountUserByExchangeStorageReq {
+}
+message CountUserByExchangeStorageResp {
+  int64 total = 1;
+}
+message CountUserInviteReq {
+  int64 pid = 1;
+}
+message CountUserInviteResp {
+  int64 total = 1;
+}
+message CheckUserInviteReq {
+  int64 pid = 1;
+  int64 uid = 2;
+}
+message CheckUserInviteResp {
+  int64 total = 1;
+}
+message CountAssetsReq {
+  string assetName = 1;
+  int64 uid = 2;
+  int64 pid = 3;
+  int64 isTag = 4;
+  bool isDel = 5;
+  int64 status = 6;
+  string cid = 7;
+  int64 assetTypes = 8; //1文件夹2文件3视频4图片
+}
+message CountAssetsResp {
+  int64 total = 1;
+}
+message FindUserRewardIntegralReq {
+  int64 uid = 1;
+}
+message FindUserRewardIntegralResp {
+  int64 id = 1;
+  int64 uid = 2;
+  int64 inviteNum = 3;
+  int64 createdTime = 4;
+}
+message  SaveUserRewardReq {
+  int64 uid = 1;
+  int64 pid = 2;
+  int64 points = 3;
+  int64 pointsVip = 4; //tg会员奖励积分
+}
+
+message ClaimInviteRewardReq {
+  int64 uid = 1;
+}
+message FindUserInviteReq {
+  repeated int64 uid = 1;
+  int64 pid = 2;
+}
+message UserInvite {
+  int64 uid = 1;
+  int64 pid = 2;
+  int64 createdTime = 3;
+  int64 id = 4;
+  int64 invitePoints = 5;
+}
+message FindUserInviteResp {
+  repeated UserInvite list = 1;
+}
+message FindOneUserPointsReq {
+  int64 uid = 1;
+}
+message FindOneUserPointsResp {
+  int64 id = 1;
+  int64 uid = 2;
+  int64 points = 3; //积分
+  int64 reqPoints = 4; //邀请奖励积分
+  int64 createdTime = 5;
+}
+message FindOneUserStorageReq {
+  int64 uid = 1;
+}
+message FindOneUserStorageResp {
+  int64 id = 1;
+  int64 uid = 2;
+  int64 storage = 3;
+  int64 storageUse = 5;
+  int64 reqStorage = 6;
+  int64 surStorage = 7;
+}
+message SaveUserPointsAndStorageReq {
+  int64 uid = 1;
+  int64 points = 2;
+  int64 reqPoints = 4;
+  int64 storage = 3;
+  int64 storageUse = 5;
+  int64 storageExchange = 6; //兑换空间
+}
+message FindUserPointsReq {
+  repeated int64 uid = 1;
+}
+message FindUserPointsResp {
+  repeated FindOneUserPointsResp list = 1;
+}
+message FindUserStorageExchangeReq {
+  int64 uid = 1;
+  int64 page = 2;
+  int64 size = 3;
+}
+message FindUserStorageExchangeRespList {
+  int64 total = 2;
+  repeated FindUserStorageExchangeResp list = 1;
+}
+message FindUserStorageExchangeResp {
+  int64 id = 1;
+  int64 uid = 2;
+  int64 storageExchange = 3;
+  int64 createdTime = 4;
+}
+message ReceiveUserReq {
+  int64 uid = 1;
+  int64 storage = 2;
+  int64 isReceive = 3;
+  int64 points = 4;
+}
+message ReceiveActionPointsReq {
+  int64 uid = 1;
+  string location = 2;
+  string ip = 3;
+  string name = 4;
+  int64 points = 5;
+  string Lan = 6;
+}
+message IsOldUserResp {
+  bool isOldUser = 1;
+}
+message UserStorageAndToken {
+  int64 storage = 1;
+  int64 token = 2;
+}
+message SaveUserTokenReq {
+  int64 uid = 1;
+  int64 token = 2;
+}
+
+
+service user {
+  //用户端
+  rpc FindOneByUid(UidReq) returns (User);
+  //保存用户
+  rpc SaveUser(User) returns (Response);
+  //删除用户
+  rpc DelUser(DelUserReq) returns (Response);
+  //查询推荐用户
+  rpc FindUserByPid(FindUserByPidReq) returns (UserList);
+  rpc FindUser(QueryUserReq) returns (UserList);
+  //根据用户邀请码查询用户
+  rpc FindUserByCode(UserCodeReq) returns (User);
+  //查询用戶邀請數量
+  rpc CountUserInvite(CountUserInviteReq) returns (CountUserInviteResp);
+  //查询奖励空间总数
+  rpc CountUserByExchangeStorage(CountUserByExchangeStorageReq) returns (CountUserByExchangeStorageResp);
+  //校验用户是否邀请过
+  rpc CheckUserInvite(CheckUserInviteReq) returns (CheckUserInviteResp);
+  //用户积分
+  rpc FindOneUserPoints(FindOneUserPointsReq) returns (FindOneUserPointsResp);
+  rpc FindUserPoints(FindUserPointsReq) returns (FindUserPointsResp);
+  //用户存储空间
+  rpc FindOneUserStorage(FindOneUserStorageReq) returns (FindOneUserStorageResp);
+  //用户空间兑换列表
+  rpc FindUserStorageExchange(FindUserStorageExchangeReq) returns (FindUserStorageExchangeRespList);
+  //保存用户积分和空间
+  rpc SaveUserPointsAndStorage(SaveUserPointsAndStorageReq) returns (Response);
+  //领取用户奖励空间
+  rpc ReceiveUser(ReceiveUserReq) returns (Response);
+  //校验是否满足领取条件
+  rpc CheckReceive(ReceiveActionPointsReq) returns (Response);
+  //用户领取活动积分
+  rpc ReceiveActionPoints(ReceiveActionPointsReq) returns (Response);
+  rpc CheckIsOldUser(UidReq) returns (IsOldUserResp);
+  // 用户预订空投
+  rpc GetUserStorageAndToken(UidReq) returns (UserStorageAndToken);
+  rpc SaveUserToken(SaveUserTokenReq) returns (Response);
+
+  //发送消息
+  rpc SaveMessage(SaveMessageReq) returns (Response);
+  //删除消息
+  rpc DelMessage(DelMessageReq) returns (Response);
+  //查询消息
+  rpc FindMessage(FindMessageReq) returns (FindMessageResp);
+
+  //查询用户任务列表
+  rpc FindTask(FindTaskReq) returns (TaskResp);
+  rpc FindOneTask(FindOneTaskReq) returns (Task);
+  //修改任务完成状态
+  rpc UpdateTask(UpdateTaskReq) returns (Response);
+  rpc SaveTask(SaveTaskReq) returns (Response);
+
+  //保存分享资源
+  rpc SaveShare(SaveShareReq) returns (Response);
+  //修改分享资源密码和有效期
+  rpc UpdateShare(UpdateShareReq) returns (Response);
+  //查看分享资源
+  rpc FindShare(FindShareReq) returns (FindShareResp);
+  //查看分享资源
+  rpc FindOneShare(FindOneShareReq) returns (Share);
+  //删除分享资源
+  rpc DelShare(FindOneShareReq) returns (Response);
+
+  //保存资源
+  rpc SaveAssets(SaveAssetsReq) returns (SaveAssetsResp);
+  //修改资源name,*tag,status,cid,link
+  rpc UpdateAssetsName(UpdateAssetsNameReq) returns (Response);
+  //资源移动
+  rpc UpdateAssetsMove(UpdateAssetsMoveReq) returns (Response);
+  //资源复制
+  rpc UpdateAssetsCopy(UpdateAssetsCopyReq) returns (Response);
+  //资源删除
+  rpc DelAssets(DelAssetsReq) returns (Response);
+  //查看资源
+  rpc FindAssets(FindAssetsReq) returns (FindAssetsResp);
+  rpc FindAssetsNoDel(FindAssetsReq) returns (FindAssetsResp);
+  //查看资源
+  rpc FindOneAssets(FindOneAssetsReq) returns (Assets);
+  //还原资源
+  rpc RestoreAssets(DelAssetsReq) returns (Response);
+  //清理资源
+  rpc ClearAssets(DelAssetsReq) returns (Response);
+  //查看资源数据量
+  rpc CountAssets(CountAssetsReq) returns (CountAssetsResp);
+  // 获取资源目录下的所有子资源id
+  rpc GetAllAssetIds(GetAllAssetIDsReq) returns (AllAssetIDsRes);
+
+  //查看邀请奖励
+  rpc FindUserRewardIntegral(FindUserRewardIntegralReq) returns (FindUserRewardIntegralResp);
+  //保存邀请奖励
+  rpc SaveUserReward(SaveUserRewardReq) returns (Response);
+  // 领取邀请奖励
+  rpc ClaimInviteReward(ClaimInviteRewardReq) returns (Response);
+
+  // 朋友列表
+  rpc FindUserInvite(FindUserInviteReq) returns (FindUserInviteResp);
+
+
+  //管理端
+  //查询管理端用户
+  rpc FindOneByAccountDeletedTime(AccountReq) returns (Admin);
+  rpc FindOneByIdAccountDeletedTime(AccountReq) returns (Admin);
+  //管理端列表
+  rpc FindAdminByIdAccountIsDisableDeletedTime(AdminReq) returns (QueryAdminRes);
+  //保存管理端用户
+  rpc SaveAdmin(Admin) returns (Response);
+  //保存管理端用户
+  rpc DelAdmin(DelTaskPoolByIdReq) returns (Response);
+
+  //查询用户信息 返回剩余积分、总空间、剩余空间
+  rpc FindUserByNameIsDisable(QueryUserReq) returns (QueryUserRes);
+  //禁用用户
+  rpc DisableUser(DisableUserReq) returns (Response);
+
+  //保存任务池
+  rpc SaveTaskPool(SaveTaskPoolReq) returns (Response);
+  //查询任务池
+  rpc FindTaskPoolByTaskType(FindTaskPoolByTaskTypeReq) returns (TaskPoolListResp);
+  //删除任务池
+  rpc DelTaskPoolById(DelTaskPoolByIdReq) returns (Response);
+
+  //保存数据字典
+  rpc SaveDict(SaveDictReq) returns (Response);
+  //查询数据字典 name And code
+  rpc FindDictByName(FindDictByNameReq) returns (FindDictByNameResp);
+
+  //添加pin消息
+  rpc SaveBotPinMsg(SaveBotPinMsgReq) returns (Response);
+  //删除pin消息
+  rpc DelBotPinMsg(DelBotPinMsgReq) returns (Response);
+  //查询pin消息
+  rpc FindBotPinMsg(FindBotPinMsgReq) returns (FindBotPinMsgResp);
+
+  //保存bot命令
+  rpc SaveBotCommand(SaveBotCommandReq) returns (Response);
+  //查询bot命令
+  rpc FindBotCommand(FindBotCommandReq) returns (FindBotCommandResp);
+  //删除bot命令
+  rpc DelBotCommand(DelBotCommandReq) returns (Response);
+  //查询bot命令
+  rpc FindOneBotCommand(FindOneBotCommandReq) returns (BotCommandItem);
+
+
+  //保存传输中资源
+  rpc SaveAssetFile(SaveAssetFileReq) returns (SaveAssetFileResp);
+  //修改传输中资源tag,status,cid,link,assetId
+  rpc UpdateAssetFile(UpdateAssetFileReq) returns (UpdateAssetResp);
+  //资源传输中删除
+  rpc DelAssetFile(DelAssetFileReq) returns (Response);
+  //查看传输中资源
+  rpc FindAssetFile(FindAssetFileReq) returns (FindAssetFileResp);
+  //查看传输中资源
+  rpc FindOneAssetFile(FindOneAssetFileReq) returns (AssetFile);
+
+  //保存用户titan token
+  rpc SaveUserTitanToken(SaveUserTitanTokenReq) returns (Response);
+  //查询用户titan token
+  rpc FindOneUserTitanToken(FindOneUserTitanTokenReq) returns (UserTitanToken);
+  //修改用户titan token
+  rpc UpdateUserTitanToken(UpdateUserTitanTokenReq) returns (Response);
+}
+message SaveUserTitanTokenReq {
+  int64 uid = 1;
+  string token = 2;
+  int64 expire = 3;
+}
+message FindOneUserTitanTokenReq {
+  int64 uid = 1;
+}
+message UserTitanToken {
+  int64 uid = 1;
+  string token = 2;
+  int64 expire = 3;
+}
+message UpdateUserTitanTokenReq {
+  int64 uid = 1;
+  string token = 2;
+  int64 expire = 3;
+}
+message FindOneAssetFileReq {
+  string id = 1;
+  int64 assetId = 2;
+}
+message AssetFile {
+  string id = 1;
+  string assetName = 2;
+  int64 assetSize = 3;
+  int64 assetType = 4;
+  int64 pid = 5;
+  int64 source = 6; //积分来源 1本地上次2云上传
+  string path = 7; //路径
+  int64 uid = 8;
+  string cid = 9;
+  int64 assetId = 10;
+  int64 tag = 11;
+  int64 status = 12; //状态 1禁用2进行中3完成4失败
+  string link = 13;
+  int64 createdTime = 14;
+  int64 updatedTime = 15;
+}
+message FindAssetFileResp {
+  repeated AssetFile list = 1;
+  int64 total = 2;
+}
+message FindAssetFileReq {
+  repeated int64 status = 1; //状态 1禁用2进行中3完成4失败
+  string id = 4;
+  int64 uid = 5;
+  int64 page = 2;
+  int64 size = 3;
+}
+message DelAssetFileReq {
+  repeated string ids = 1; // id
+  bool isSource = 2; //是否删除源文件
+}
+message UpdateAssetFileReq {
+  string id = 1;
+  string cid = 2;
+  int64 assetId = 3;
+  int64 tag = 4;
+  int64 status = 5; //状态 1禁用2进行中3完成4失败
+  string link = 6;
+  int64 assetSize = 7;
+}
+message SaveAssetFileReq{
+  int64 uid = 1;
+  string assetName = 3;
+  int64 assetSize = 4;
+  int64 assetType = 5; //1文件夹2文件3视频4图片
+  int64 pid = 2;
+  int64 source = 6; //积分来源 1本地上次2云上传
+  string path = 8; //路径
+}
+message SaveAssetFileResp {
+  string id = 1;
+}
+message UpdateAssetResp {
+  int64 id = 1;
+}
+message SaveBotCommandReq {
+  string botCommand = 1;
+  string  text = 2;
+  string photo = 3;
+  string button_array = 4;
+  int64 status = 5;
+  int64 sendType = 6;
+  string description = 7;
+  string languageCode = 8;
+}
+message FindBotCommandReq {
+  string command = 1;
+  string  text = 2;
+  int64 sendType = 6;
+  string description = 7;
+  string languageCode = 8;
+  int64 page = 3;
+  int64 size = 4;
+}
+message BotCommandItem {
+  int64 id = 1;
+  string command = 2;
+  string languageCode = 11;
+  string  text = 3;
+  string photo = 4;
+  string button_array = 5;
+  int64 status = 9;
+  int64 sendType = 6;
+  string description = 10;
+  int64 createdTime = 7;
+  int64 updatedTime = 8;
+}
+message FindBotCommandResp {
+  repeated BotCommandItem list = 1;
+  int64 total = 2;
+}
+message DelBotCommandReq {
+  int64 id = 1;
+}
+message FindOneBotCommandReq {
+  int64 id = 1;
+  string botCommand = 2;
+  string languageCode = 3;
+}
+message BotPinMsg {
+  int64 id = 1;
+  int64 chatId = 2;
+  int64 msg = 3;
+  string Text = 5;
+  int64 createdTime = 4;
+}
+message FindBotPinMsgResp {
+  repeated BotPinMsg list = 1;
+  int64 total = 2;
+}
+message FindBotPinMsgReq {
+  int64 chatId = 1;
+  int64 page = 2;
+  int64 size = 3;
+}
+message DelBotPinMsgReq {
+  int64 id = 1;
+  int64 chatId = 2;
+}
+message SaveBotPinMsgReq{
+  int64 chatId = 1;
+  int64 msg = 2;
+  string Text = 5;
+}
+message Dict {
+  int64 id = 1;
+  string name = 2;
+  string desc = 3;
+  int64 paramType = 4;
+  string value = 5;
+  int64 backupValue = 6;
+  string code = 7;
+}
+message SaveDictReq {
+  repeated Dict dict = 1;
+}
+message FindDictByNameReq {
+  repeated int64 paramType = 1;
+  repeated string code = 2;
+}
+message FindDictByNameResp {
+  repeated Dict dictList = 1;
+}
+
+
+
+message AccountReq {
+  int64 id = 1;
+  string account = 2;
+}
+message AdminReq {
+  repeated int64 id = 1;
+  string account = 2;
+  int64 isDisable = 3;
+  int64 page = 4;
+  int64 size = 5;
+}
+message QueryAdminRes {
+  int64 total = 1;
+  repeated Admin admins = 2;
+}
+
+message Admin {
+  int64 id = 1;
+  string account = 2;
+  string password = 3;
+  string avatar = 4;
+  int64 isDisable = 5;
+  int64 createdTime = 6;
+  int64 updatedTime = 7;
+  int64 lastTime = 8;
+  string remark = 9;
+}
+message SaveTaskPoolReq {
+  int64 id = 1;
+  int64 taskType = 2;
+  string taskName = 3;
+  int64 integral = 4;
+  int64 isDisable = 5;
+  string remark = 6;
+  string link = 7;
+  string taskNameEn = 8;
+  int64 sort = 9;
+}
+
+message FindTaskPoolByTaskTypeReq {
+  int64 id = 5;
+  int64 taskType = 1;
+  string taskName = 2;
+  int64 isDisable = 6;
+  int64 page = 3;
+  int64 size = 4;
+}
+message DelTaskPoolByIdReq {
+  int64 id = 1;
+}
+message TaskPool {
+  int64 id = 1;
+  int64 taskType = 2;
+  string taskName = 3;
+  int64 integral = 4;
+  int64 createdTime = 5;
+  int64 isDisable = 6;
+  string remark = 7;
+  string link = 8;
+  string taskNameEn = 10;
+  int64 sort = 9;
+}
+
+message TaskPoolListResp {
+  int64 count = 1;
+  repeated TaskPool taskPools = 2;
+}
+
+message QueryUserReq {
+  string name = 1; // 用户名
+  int64 isDisable = 2; // 是否禁用 2未禁用 1已禁用
+  int64 page = 3;
+  int64 size = 4;
+  int64 id = 5;
+  int64 pid = 11;
+  int64 startTime = 15;
+  int64 endTime = 16;
+  repeated int64 uid = 6;
+}
+message UserInfo {
+  int64 id = 1;
+  int64 uid = 2;
+  string name = 3;
+  string avatar = 4;
+  string mail = 5;
+  string walletAddress = 8;
+  int64 distribution = 10;
+  int64 pid = 11;
+  string pname = 12;
+  string recommendCode = 13;
+  int64 isDisable = 14;
+  int64 createdTime = 15;
+  int64 updatedTime = 16;
+  int64 source = 17;
+}
+message QueryUserRes {
+  int64 total = 1;
+  repeated UserInfo users = 2;
+}
+message DisableUserReq {
+  int64 id = 1; // id
+  int64 isDisable = 2; // 是否禁用 1禁用 2启用
+}
+message GetAllAssetIDsReq {
+  repeated int64 pid = 1;
+  int64 uid = 2;
+}
+message AllAssetIDsRes {
+  repeated int64 ids = 1;
+}

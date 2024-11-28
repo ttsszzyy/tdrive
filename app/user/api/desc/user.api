@@ -1,0 +1,335 @@
+syntax = "v1"
+
+info (
+	title:   "用户中心"
+	desc:    "用户中心"
+	author:  "sunruomeng"
+	Email:   "sunrm@zhiannet.com"
+	version: "v1.0.0"
+)
+
+import "types/user.api"
+
+@server (
+	prefix:     api/v1/user
+	group:      user
+	middleware: AuthMiddleware
+)
+service user-api {
+	@doc "登录"
+	@handler login
+	post /login (loginReq) returns (LoginResp)
+
+	@doc "token续期"
+	@handler renewal
+	post /renewal (renewalReq) returns (renewalResp)
+
+	@doc "删除用户"
+	@handler delUser
+	delete /delUser (Request) returns (Response)
+
+	@doc "引导页奖励"
+	@handler guideReward
+	get /guideReward (Request) returns (guideRewardRes)
+
+	@doc "添加引导页奖励"
+	@handler guide
+	post /guide (guideReq) returns (Response)
+
+	@doc "获取用户信息"
+	@handler userInfo
+	get /userInfo (Request) returns (UserRes)
+
+	@doc "获取首页排行"
+	@handler racking
+	get /racking (Request) returns (rackingListRes)
+
+	@doc "获取排行信息"
+	@handler rackingList
+	get /rackingList (rackingListReq) returns (rackingListRes)
+
+	@doc "获取用户引荐计划"
+	@handler userRecommendPlan
+	get /userRecommendPlan (Request) returns (userRecommendPlanRes)
+
+	@doc "奖励记录"
+	@handler rewardList
+	get /rewardList (rewardListReq) returns (rewardListRes)
+
+	@doc "领取奖励"
+	@handler claimReward
+	get /claimReward (Request) returns (Request)
+
+	@doc "设置用户语言"
+	@handler setLanguage
+	post /setLanguage (SetLanguageReq) returns (Response)
+
+	@doc "获取加密参数的rsa公钥"
+	@handler getRsaPublicKey
+	get /getPublicKey returns (string)
+
+	@doc "检测是否有领取资格"
+	@handler checkReceive
+	post /checkReceive (receivePointsReq) returns (MsgResponse)
+
+	@doc "领取活动积分"
+	@handler receivePoints
+	post /receivePoints (receivePointsReq) returns (MsgResponse)
+
+	@doc "修改用户为阅读注意事项为已阅读"
+	@handler updateReadStatus
+	put /updateReadStatus
+}
+
+import "types/document.api"
+
+@server (
+	prefix:     api/v1/user/document
+	group:      document
+	middleware: AuthMiddleware
+)
+service user-api {
+	@doc "上传文件夹"
+	@handler createFolder
+	post /createFolder (createFolderReq) returns (Response)
+
+	@doc "创建本地上传文件"
+	@handler createAssets
+	post /createAssets (createAssetsReq) returns (createAssetsResp)
+
+	@doc "本地上传文件"
+	@handler upload
+	post /upload (uploadReq) returns (Response)
+
+	@doc "链接上传文件"
+	@handler cloudLink
+	post /cloudLink (cloudLinkReq) returns (Response)
+
+	@doc "传输中或者传输完成"
+	@handler inTransit
+	post /inTransit (inTransitReq) returns (inTransitRes)
+
+	@doc "云下载"
+	@handler cloudDownload
+	post /cloudDownload (cloudDownloadReq) returns (cloudDownloadResp)
+
+	@doc "查询资源列表"
+	@handler document
+	post /document (documentReq) returns (documentRes)
+
+	@doc "ids查询资源列表"
+	@handler assetIds
+	post /assetIds (assetIdsReq) returns (documentRes)
+
+	@doc "资源详情"
+	@handler assetsInfo
+	get /assetsInfo (assetsInfoReq) returns (AssetItem)
+
+	@doc "获取默认文件夹"
+	@handler default
+	post /default (Request) returns (defaultRes)
+
+	@doc "标记"
+	@handler isTag
+	put /isTag (isTagReq) returns (Response)
+
+	@doc "重命名"
+	@handler rname
+	put /rname (rnameReq) returns (Response)
+
+	@doc "移动"
+	@handler move
+	put /move (moveReq) returns (Response)
+
+	@doc "复制"
+	@handler copy
+	put /copy (copyReq) returns (Response)
+
+	@doc "删除"
+	@handler del
+	delete /del (delReq) returns (Response)
+
+	@doc "还原资源"
+	@handler restore
+	put /restore (delReq) returns (Response)
+
+	@doc "清空回收站"
+	@handler clear
+	delete /clear (delReq) returns (Response)
+
+	@doc "清空回收站"
+	@handler report
+	delete /report (reportReq) returns (Response)
+
+	@doc "校验回收站"
+	@handler checkRecycle
+	get /checkRecycle returns (checkRecycleRes)
+
+	@doc "分享保存资源"
+	@handler saveAssets
+	post /saveAssets (saveAssetsReq) returns (saveAssetsResp)
+}
+
+import "types/transmission.api"
+
+@server (
+	prefix:     api/v1/user/transmission
+	group:      transmission
+	middleware: AuthMiddleware
+)
+service user-api {
+	@doc "创建本地上传文件"
+	@handler createAssetFile
+	post /createAssetFile (createAssetFileReq) returns (createAssetFileResp)
+
+	@doc "传输中列表打标记"
+	@handler isTag
+	post /isTagAssetFile (isTagAssetFileReq) returns (Response)
+
+	@doc "重试"
+	@handler retry
+	post /retry (retryReq) returns (Response)
+
+	@doc "传输中或者传输完成"
+	@handler list
+	post /list (listReq) returns (listRes)
+
+	@doc "删除"
+	@handler delTransmission
+	delete /delTransmission (delTransmissionReq) returns (Response)
+
+	@doc "修改传输中状态为失败"
+	@handler updateTransmission
+	put /updateTransmission (updateTransmissionReq) returns (Response)
+
+	@doc "传输中回调"
+	@handler assetCallback
+	put /assetCallback (assetCallbackReq) returns (Response)
+}
+
+import "types/share.api"
+
+@server (
+	prefix:     api/v1/user/share
+	group:      share
+	middleware: AuthMiddleware
+)
+service user-api {
+	@doc "我的分享列表"
+	@handler shareList
+	get /shareList (queryShareReq) returns (queryShareResp)
+
+	@doc "删除分享"
+	@handler delShare
+	delete /delShare (delShareReq) returns (Response)
+
+	@doc "设置密码"
+	@handler setSharePass
+	put /setSharePass (setPassReq) returns (Response)
+
+	@doc "设置有效期"
+	@handler setShareTime
+	put /setShareTime (setTimeReq) returns (Response)
+
+	@doc "增加阅览量"
+	@handler addRead
+	put /addRead (delShareReq) returns (Response)
+
+	@doc "增加保存量"
+	@handler addSave
+	put /addSave (delShareReq) returns (Response)
+
+	@doc "添加分享"
+	@handler addShare
+	post /addShare (addShareReq) returns (addShareResp)
+
+	@doc "查看分享文件"
+	@handler getShare
+	get /getShare (getShareReq) returns (documentRes)
+}
+
+@server (
+	prefix: api/v1/user/share
+	group:  share
+)
+service user-api {
+	@doc "资源分享地址"
+	@handler shareFileUrl
+	get /resource/:uuid (getShareURLReq) returns (string)
+}
+
+import "types/task.api"
+
+@server (
+	prefix:     api/v1/user/task
+	group:      task
+	middleware: AuthMiddleware
+)
+service user-api {
+	@doc "任务列表"
+	@handler taskList
+	get /taskList (Request) returns (taskListRes)
+
+	@doc "完成任务"
+	@handler taskComplete
+	put /taskComplete (taskCompleteReq) returns (taskCompleteResp)
+}
+
+import "types/trade.api"
+
+@server (
+	prefix:     api/v1/user/trade
+	group:      trade
+	middleware: AuthMiddleware
+)
+service user-api {
+	@doc "用户兑换空间查询"
+	@handler userSpace
+	get /userSpace (userSpaceReq) returns (userSpaceResp)
+
+	@doc "预计兑换积分"
+	@handler estimatePoints
+	get /estimatePoints (estimatePointsReq) returns (estimatePointsResp)
+
+	@doc "预计兑换空间"
+	@handler estimateStorage
+	get /estimateStorage (Request) returns (estimateStorageResp)
+
+	@doc "兑换积分"
+	@handler exchange
+	post /exchange (exchangeReq) returns (Response)
+
+	@doc "兑换空间"
+	@handler exchangeStorage
+	post /exchangeStorage (exchangeStorageReq) returns (Response)
+
+	@doc "查看空投Token详情"
+	@handler getAirdropToken
+	get /airdropToken returns (AirdropTokenDetail)
+
+	@doc "兑换空投"
+	@handler exchangeToken
+	post /exchangeToken (ExChangeTokenReq)
+}
+
+import "types/message.api"
+
+@server (
+	prefix:     api/v1/user/message
+	group:      message
+	middleware: AuthMiddleware
+)
+service user-api {
+	@doc "绑定上级用户请求"
+	@handler bingUser
+	post /bingUser (bingUserReq) returns (Response)
+
+	@doc "消息列表"
+	@handler messageList
+	get /messageList (rewardListReq) returns (messageListResp)
+
+	@doc "绑定确认"
+	@handler bingConfirm
+	post /bingConfirm (bingConfirmReq) returns (Response)
+}
+

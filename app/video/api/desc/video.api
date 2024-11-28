@@ -1,0 +1,78 @@
+syntax = "v1"
+
+info(
+	title: "短视频中心"
+	desc: "短视频中心"
+	author: "sunruomeng"
+	Email: "sunrm@zhiannet.com"
+	version: "v1.0.0"
+)
+
+import "types/video.api"
+
+@server(
+	prefix: api/v1/video
+	group: video
+	middleware: AuthMiddleware
+)
+service video-api {
+	@doc "视频列表"
+	@handler videoList
+	get /videoList (videoListReq) returns (videoListResp)
+}
+
+import "types/label.api"
+
+@server(
+	prefix: api/v1/video/label
+	group: label
+	middleware: AuthMiddleware
+)
+service video-api {
+	@doc "标签列表"
+	@handler labelList
+	get /labelList (labelListReq) returns (labelListResp)
+	
+	@doc "标签添加"
+	@handler labelAdd
+	post /labelAdd (labelAddReq) returns (labelAddResp)
+	
+	@doc "标签点赞"
+	@handler labelUserLike
+	post /labelUserLike (labelUserLikeReq) returns (labelUserLikeResp)
+	
+}
+
+import "types/comment.api"
+
+@server(
+	prefix: api/v1/video/comment
+	group: comment
+	middleware: AuthMiddleware
+)
+service video-api {
+	@doc "评论列表"
+	@handler commentList
+	get /commentList (commentListReq) returns (commentListResp)
+	
+	@doc "添加评论"
+	@handler commentAdd
+	post /commentAdd (commentAddReq) returns (VideoReply)
+}
+
+import "types/reply.api"
+
+@server(
+	prefix: api/v1/video/reply
+	group: reply
+	middleware: AuthMiddleware
+)
+service video-api {
+	@doc "回复评论列表"
+	@handler replyList
+	get /replyList (replyListReq) returns (replyListResp)
+	
+	@doc "回复评论"
+	@handler replyAdd
+	post /replyAdd (replyAddReq) returns (Response)
+}

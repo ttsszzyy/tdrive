@@ -1,0 +1,30 @@
+syntax = "v1"
+type (
+    Task {
+        Id int64 `json:"id"`
+        TaskPoolId int64 `json:"task_pool_id"` // 任务池id
+        Uid int64 `json:"uid"`
+        TaskType int64 `json:"task_type"` // 任务类型 1入职2探索3邀请4奖励
+        TaskName string `json:"task_name"`
+        TaskNameEn string `json:"task_name_en"`
+        Sort int64 `json:"sort"` //排序
+        Url string `json:"url"`
+        Integral int64 `json:"integral"` //积分
+        IsComplete int64 `json:"is_complete"`  //是否完成 2未完成 1已完成
+        CreatedTime int64 `json:"created_time"`
+        UpdatedTime int64 `json:"updated_time"`
+    }
+    taskListRes {
+        Url string `json:"url"`
+        Total int64 `json:"total"`
+        Tasks []*Task `json:"tasks"`
+    }
+    taskCompleteReq {
+        Id int64 `json:"id"`
+        TaskPoolId int64 `json:"task_pool_id"`
+        Integral int64 `json:"integral,omitempty"` //积分
+    }
+    taskCompleteResp {
+        Integral int64 `json:"integral"` //积分
+    }
+)

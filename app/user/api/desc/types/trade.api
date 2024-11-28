@@ -1,0 +1,41 @@
+syntax = "v1"
+type (
+    userSpaceReq {
+        Page int64 `form:"page"`
+        Size int64 `form:"size"`
+    }
+    SpaceItem {
+        Id int64 `json:"id"`
+        Uid int64 `json:"uid"`
+        StorageExchange int64 `json:"storage_exchange"`
+        CreatedTime int64 `json:"created_time"`
+    }
+    userSpaceResp {
+        Total int64 `json:"total"`
+        List []*SpaceItem `json:"list"`
+    }
+    estimatePointsReq {
+        Storage int64 `form:"storage"`    //空间
+    }
+    exchangeReq {
+        Storage int64 `json:"storage"`    //空间
+    }
+    estimatePointsResp {
+        Points int64 `json:"points"` //积分
+    }
+    estimateStorageResp {
+        Points int64 `json:"points"`    //积分
+        Storage int64 `json:"storage"`    //空间
+    }
+    exchangeStorageReq {
+        Storage int64 `json:"storage"`    //空间
+    }
+
+    AirdropTokenDetail {
+        BookableToken int64 `json:"bookable_token"`
+        BookedToken int64 `json:"booked_token"`
+    }
+    ExChangeTokenReq {
+        Storage int64 `json:"storage"`
+    }
+)

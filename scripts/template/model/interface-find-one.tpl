@@ -1,0 +1,1 @@
+FindOne(ctx context.Context, {{.lowerStartCamelPrimaryKey}} {{.dataType}}, s ...sqlx.Session) (*{{.upperStartCamelObject}}, error)

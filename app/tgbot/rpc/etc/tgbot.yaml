@@ -1,0 +1,59 @@
+Name: tgbot.rpc
+ListenOn: 0.0.0.0:8891
+Timeout: 60000
+MaxBytes: 20971520 #文件上传大小限制20M
+MaxUpload: 3 #文件上传上限3个
+UploadExpireTime: 120 #文件上传過期時間單位s
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: tgbot.rpc
+Asynq:
+  Addr: "127.0.0.1:6379"
+  Username:
+  Pass:
+  DB: 1
+  Concurrency: 100 #队列最大并发数
+Telegram: #tg的配置
+  #Token: "7441175021:AAGYI1bXK-j-NTyYh03JRy2349sn8cxSatE"
+  Token: "7209025421:AAFXHq9-5YAhaF9jBS97OF0qakfKaaJEhNs"
+  Url : "https://26e60eb4cf4e44379d3c81c523759c50.cassini-l1.titannet.io"
+  PrefixFilePath : "/var/lib/telegram-bot-api/7209025421:AAFXHq9-5YAhaF9jBS97OF0qakfKaaJEhNs/"
+  TgUrl : "https://t.me/DevTdriver_bot/Tdriver"
+  FailText : "保存失敗，請稍後再試！"
+  FailTextEn : "Save failed, Please try again!"
+  FailBut : "打開TDrive"
+  FailButEn : "Open TDrive"
+  FailSpaceText: "保存未完成，空間不足，請點擊按鈕領取免費積分，兌換空間"
+  FailSpaceTextEn: "Save incomplete, insufficient space.\nPlease click the button to claim free points and redeem storage space."
+  FailSpaceBut: "打開TDrive領取積分"
+  FailSpaceButEn: "Open TDrive to claim points"
+  FailTip: "保存失敗，請稍後再試！\nTDrive支持20MB以內的文件上傳，如果您是首次使用，請點擊下麵按鈕領取免費積分，兌換空間，還能獲取空投獎勵哦！"
+  FailTipEn: "Save failed, please try again later!\nTDrive supports file uploads up to 20MB.\nIf this is your first time using it, please click the button below to claim free points and redeem storage space.\nYou can also get airdrop rewards!"
+  SuccessText : "保存成功，點擊按鈕查看檔案"
+  SuccessTextEn : "Save successful Click to view"
+  SuccessBut : "保存成功，點擊按鈕查看檔案"
+  SuccessButEn : "Save successful Click to view"
+  ShareUrl: "https://t.me/share/url" #tg分享的url
+  ShareText: "你的第一筆加密財富。加入、分享和賺取空投！\n🎁+10萬積分作為首次禮物。\n🎁 +50萬積分，如果你有電報高級版。" #tg分享的文案
+  ShareTextEn: "Your first crypto wealth. Join, share and earn airdrops!\n🎁+100,000 points as a first-time gift.\n🎁+500,000 points if you have Telegram Premium." #tg分享的文案
+  FirstBut: "打開TDrive進行連結"
+  FirstButEn: "Open TDrive to link"
+  FirstText: "保存未完成，因為您正在使用的TG帳號，還沒有連結TDrive，連結後可保存當前檔案"
+  FirstTextEn: "Save incomplete because the TG account you are currently using has not been linked to TDrive yet. Once linked, the current file can be saved"
+  LimitText: "您正在上傳多個檔案，可能會耗費較長時間。 請確保網絡穩定，以免上傳中斷影響你的使用體驗！"
+  LimitTextEn: "You're uploading multiple files, which may take some time. Ensure your network connection is stable to avoid interruptions that could affect your upload process!"
+
+RedisConf:
+  Host: 127.0.0.1:6379
+  Pass:
+  Type: node
+UserRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc
+
+TiTan: #titan的配置
+  TitanURL: "https://api-test1.container1.titannet.io"
+  APIKey : "mnCtLP5vMNxD0bjdrUxHRy++M9WmM3U/+RBxauFkNFxIBCwoc8y7uV/d0E46UWNrMrR9k09RFwst2+JVECmVcIoEEJaYyW522tnHjnOlLRxr5vm9V2g5hKEZ1W6erGA5"

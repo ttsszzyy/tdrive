@@ -1,0 +1,23 @@
+syntax = "v1"
+
+info (
+	title:   "Tg机器人"
+	desc:    "Tg机器人"
+	author:  "sunruomeng"
+	Email:   "sunrm@zhiannet.com"
+	version: "v1.0.0"
+)
+
+@server (
+	prefix: api/v1/bot
+	group:  bot
+)
+service tgbot-api {
+	@doc "bot回调"
+	@handler botWebhook
+	post /webhook
+	
+	@doc "titan回调"
+	@handler titanCallback
+	post /titanCallback
+}

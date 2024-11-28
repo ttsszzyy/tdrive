@@ -1,0 +1,21 @@
+syntax = "v1"
+type (
+
+    videoListReq {
+        Titel string `form:"titel,optional"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size"`
+    }
+    Video {
+        Id int64 `json:"id"`
+        Title string `json:"title"`
+        Desc string `json:"desc"`
+        FilePath string `json:"file_path"`
+        CreatedTime int64 `json:"created_time"`
+        Avatar string `json:"avatar"`
+    }
+    videoListResp {
+        List []*Video `json:"list"`
+        Total int64 `json:"total"`
+    }
+)

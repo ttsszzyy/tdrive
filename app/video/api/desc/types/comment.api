@@ -1,0 +1,27 @@
+syntax = "v1"
+
+type (
+    commentListReq {
+        Vid int64 `form:"vid"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size"`
+    }
+    commentListResp {
+        List []*VideoComment `json:"list"`
+        Total int64 `json:"total"`
+    }
+    VideoComment {
+        Id string `json:"id"`
+        Content string `json:"content"`
+        UserName string `json:"user_name"`
+        Avatar string `json:"avatar"`
+        Uid int64 `json:"uid"`
+        Vid int64 `json:"vid"`
+        CreatedTime int64 `json:"created_time"`
+        ReplyCount int64 `json:"reply_count"`
+    }
+    commentAddReq {
+        Content string `json:"content"`
+        Vid int64 `json:"vid"`
+    }
+)

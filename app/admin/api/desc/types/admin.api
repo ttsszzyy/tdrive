@@ -1,0 +1,84 @@
+syntax = "v1"
+
+type (
+    Response{
+    }
+    idReq{
+        Id int64 `json:"id"` //id
+    }
+    adminLoginReq {
+        Username string `json:"username"` //用户名
+        Password string `json:"password"` //密码
+    }
+    LoginRes {
+        Token string `json:"token"` // 登录令牌
+    }
+    queryUserReq {
+        Id int64 `form:"id,optional"`
+        Name string `form:"name,optional"` //用户名
+        Pid int64 `form:"pid,optional"` //上级id
+        IsDisable int64 `form:"is_disable,optional"` //是否禁用 1禁用 2启用
+        StartTime int64 `form:"start_time,optional"` //开始时间
+        EndTime int64 `form:"end_time,optional"` //结束时间
+        Page int64 `form:"page"` // 页码
+        Size int64 `form:"size"` // 条数
+    }
+
+    User {
+        Id int64 `json:"id"`
+        Uid int64 `json:"uid"`
+        Name string `json:"name"` //用户名
+        Avatar string `json:"avatar"` //头像
+        Mail string `json:"mail"` //邮箱
+        Integral int64 `json:"integral"`//积分
+        Storage int64 `json:"storage"`//存储空间
+        StorageUse int64 `json:"storage_use"`//使用存储空间
+        WalletAddress string `json:"wallet_address"` //钱包地址
+        Pid int64 `json:"pid"` //上级id
+        Pname string `json:"pname"` //上级用户名
+        Pintegral int64 `json:"pintegral"`//上级积分
+        IsDisable int64 `json:"is_disable"` //是否禁用 1禁用 2启用
+        CreatedTime int64 `json:"created_time"` //创建时间
+        UpdatedTime int64 `json:"updated_time"` //修改时间
+    }
+    queryUserRes {
+        Total int64 `json:"total"` //总条数
+        Users []*User `json:"users"`
+    }
+    addAdminReq {
+        Account string `json:"account"` //账户
+        Password string `json:"password"` //用户密码
+        IsDisable int64 `json:"is_disable"` //是否禁用 1禁用 2启用
+        Remark string `json:"remark,optional"` //备注
+    }
+    updateAdminReq {
+        Id int64 `json:"id"`
+        Account string `json:"account"` //账户
+        IsDisable int64 `json:"is_disable"` //是否禁用 1禁用 2启用
+        Remark string `json:"remark,optional"` //备注
+    }
+    updateAdminPassReq {
+        Id int64 `json:"id"`
+        OldPassword string `json:"old_password"` //旧密码
+        Password string `json:"password"` //新密码
+    }
+    queryAdminListReq {
+        Id int64 `form:"id,optional"`
+        Account string `form:"account,optional"` //账户
+        IsDisable int64 `form:"is_disable,optional"` //是否禁用 1禁用 2启用
+        Page int64 `form:"page"` // 页码
+        Size int64 `form:"size"` // 条数
+    }
+    Admin {
+        Id int64 `json:"id"`
+        Account string `json:"account"` //账户
+        IsDisable int64 `json:"is_disable"` //是否禁用 1禁用 2启用
+        Remark string `json:"remark"` //备注
+        CreatedTime int64 `json:"created_time"` //创建时间
+        LastTime int64 `json:"last_time"` //最后登录时间
+    }
+    queryAdminListRes {
+        Total int64 `json:"total"` //总条数
+        Admins []*Admin `json:"admins"`
+    }
+)

@@ -1,0 +1,192 @@
+syntax = "v1"
+
+info(
+	title: "管理中心"
+	desc: "管理中心"
+	author: "sunruomeng"
+	Email: "sunrm@zhiannet.com"
+	version: "v1.0.0"
+)
+
+import "types/admin.api"
+
+//管理端登录
+@server(
+	prefix: api/v1/admin/auth
+	group: auth
+)
+service admin-api {
+	@doc "登录"
+	@handler adminLogin
+	post /adminLogin (adminLoginReq) returns (LoginRes)
+}
+
+//管理端接口
+@server(
+	prefix: api/v1/admin
+	group: admin
+	middleware: AdminAuthMiddleware
+)
+//客户端管理
+service admin-api {
+	@doc "保存管理员信息"
+	@handler addAdmin
+	post /addAdmin (addAdminReq) returns (Response)
+	
+	@doc "修改管理员信息"
+	@handler updateAdmin
+	put /updateAdmin (updateAdminReq) returns (Response)
+	
+	@doc "修改管理员密码"
+	@handler updateAdminPass
+	put /updateAdminPass (updateAdminPassReq) returns (Response)
+	
+	@doc "删除管理员"
+	@handler delAdmin
+	delete /delAdmin (deleteTaskPoolReq) returns (Response)
+	
+	@doc "查询管理员信息"
+	@handler queryAdminList
+	get /queryAdminList (queryAdminListReq) returns (queryAdminListRes)
+}
+
+@server(
+	prefix: admin-api/v1/user
+	group: user
+	middleware: AdminAuthMiddleware
+)
+//用户管理
+service admin-api {
+	@doc "禁用用户"
+	@handler updateUser
+	put /updateUser (idReq) returns (Response)
+	
+	@doc "查询用户信息"
+	@handler queryUser
+	get /queryUser (queryUserReq) returns (queryUserRes)
+}
+
+import "types/task_pool.api"
+
+@server(
+	prefix: api/v1/admin/taskPool
+	group: taskPool
+	middleware: AdminAuthMiddleware
+)
+//管理端任务池
+service admin-api {
+	@doc "添加任务池"
+	@handler addTaskPool
+	post /addTaskPool (addTaskPoolReq) returns (Response)
+	
+	@doc "修改任务池"
+	@handler updateTaskPool
+	put /updateTaskPool (updateTaskPoolReq) returns (Response)
+	
+	@doc "删除任务池"
+	@handler deleteTaskPool
+	delete /deleteTaskPool (deleteTaskPoolReq) returns (Response)
+	
+	@doc "查询任务池"
+	@handler queryTaskPool
+	get /queryTaskPool (queryTaskPoolReq) returns (queryTaskPoolRes)
+}
+
+import "types/parameter.api"
+
+@server(
+	prefix: api/v1/admin/parameter
+	group: parameter
+	middleware: AdminAuthMiddleware
+)
+//管理端参数
+service admin-api {
+	@doc "修改参数"
+	@handler updateParameter
+	put /updateParameter (updateParameterReq) returns (Response)
+	
+	@doc "查询参数"
+	@handler queryParameter
+	get /queryParameter (queryParameterReq) returns (queryParameterResp)
+	
+	@doc "发送置顶消息"
+	@handler sendPhoto
+	post /sendPhoto (sendPhotoReq) returns (Response)
+	
+	@doc "删除置顶消息"
+	@handler delBotPin
+	delete /delBotPin (delBotPinReq) returns (Response)
+	
+	@doc "删除所有置顶消息"
+	@handler delAllBotPin
+	delete /delAllBotPin (delAllBotPinReq) returns (Response)
+	
+	@doc "置顶消息列表"
+	@handler botPinList
+	get /botPinList (botPinListReq) returns (botPinListResp)
+	
+	@doc "删除bot命令"
+	@handler delBotCommand
+	delete /delBotCommand (delBotCommandReq) returns (Response)
+	
+	@doc "添加bot命令"
+	@handler addBotCommand
+	post /addBotCommand (addBotCommandReq) returns (Response)
+	
+	@doc "查看bot命令列表"
+	@handler botCommandList
+	get /botCommandList (botCommandListReq) returns (botCommandListResp)
+}
+
+import "types/document.api"
+
+@server(
+	prefix: api/v1/admin/document
+	group: document
+	middleware: AdminAuthMiddleware
+)
+//管理端参数
+service admin-api {
+	
+	@doc "查询参数"
+	@handler queryFile
+	get /queryFile (queryFileReq) returns (queryFileResp)
+	
+	@doc "删除文档"
+	@handler delFile
+	delete /delFile (delFileReq) returns (Response)
+	
+	@doc "禁用或者启用文档"
+	@handler banFile
+	put /banFile (banFileReq) returns (Response)
+	
+	@doc "忽略举报"
+	@handler cancelFile
+	put /cancelFile (cancelFileReq) returns (Response)
+	
+	@doc "下载"
+	@handler download
+	post /download (downloadReq) returns (downloadResp)
+}
+
+import "types/video.api"
+
+@server(
+	prefix: api/v1/admin/video
+	group: video
+	middleware: AdminAuthMiddleware
+)
+
+service admin-api {
+	@doc "视频列表"
+	@handler videoList
+	get /videoList (videoListReq) returns (videoListRes)
+	
+	@doc "视频上传"
+	@handler videoUpload
+	post /videoUpload (videoUploadReq) returns (videoUploadResp)
+	
+	@doc "视频删除"
+	@handler videoDelete
+	delete /videoDelete (videoDeleteReq) returns (Response)
+}

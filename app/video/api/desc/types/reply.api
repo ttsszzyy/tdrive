@@ -1,0 +1,29 @@
+syntax = "v1"
+type (
+    replyListReq {
+        Commentid string `form:"comment_id"`
+        Page int64 `form:"page"`
+        Size int64 `form:"size"`
+    }
+    replyListResp {
+        List []*VideoReply `json:"list"`
+        Total int64 `json:"total"`
+    }
+    VideoReply {
+        Id string `json:"id"`
+        CommentId string `json:"comment_id"`
+        Content string `json:"content"`
+        CreatedTime int64 `json:"created_time"`
+        FromUserId int64 `json:"from_user_id"`
+        FromUserName string `json:"from_user_name"`
+        FromUserAvatar string `json:"from_user_avatar"`
+        ToUserId int64 `json:"to_user_id"`
+        ToUserName string `json:"to_user_name"`
+        ToUserAvatar string `json:"to_user_avatar"`
+    }
+    replyAddReq {
+        CommentId string `json:"comment_id"`
+        Content string `json:"content"`
+        FromUserId int64 `json:"from_user_id"`
+    }
+)

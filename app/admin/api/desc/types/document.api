@@ -1,0 +1,52 @@
+syntax = "v1"
+
+type (
+    delFileReq {
+        Id int64 `form:"id"`
+    }
+    banFileReq {
+        Id int64 `json:"id"`
+        Status int64 `json:"status"` //状态 1禁用3启用
+    }
+    cancelFileReq {
+        Id int64 `json:"id"`
+    }
+    downloadReq {
+        Id int64 `json:"id"`
+    }
+    downloadResp {
+        Flie []byte `json:"file,optional"` //文件
+    }
+    queryFileReq {
+        Id int64 `form:"id,optional"`
+        AssetName string `form:"asset_name,optional"`               //资源名称
+        AssetTypes []int64 `form:"asset_types,optional"`                //1文件夹2文件3视频4图片
+        Status int64 `form:"status,optional"`                       //状态 1禁用2进行中3完成4失败5空间不足
+        StartTime int64 `form:"start_time,optional"`                //开始时间
+        EndTime int64 `form:"end_time,optional"` //结束时间
+        IsReport int64 `form:"is_report,optional"`                    //查询举报文件
+        Page int64 `form:"page"` // 页码
+        Size int64 `form:"size"` // 条数
+    }
+    AssetItem {
+        Id int64 `json:"id"`                           //id
+        Uid int64 `json:"uid"`                         //用户id
+        Name string `json:"name"`                       //用户名
+        Cid string `json:"uid"`                        //资源id
+        Url string `json:"url"`                        //链接
+        TransitType int64 `json:"transit_type"`        //上传类型 1上传文件夹2上传文件3云链接 4TG 5X 6TK 7种子
+        AssetName string `json:"asset_name"`           //资源名称
+        AssetSize int64 `json:"asset_size"`            //资源大小
+        AssetType int64 `json:"asset_type"`            //1文件夹2文件3视频4图片
+        CreatedTime int64 `json:"created_time"`        //上传时间
+        UpdatedTime int64 `json:"updated_time"`        //修改时间
+        IsTag int64 `json:"is_tag"`                    //是否标记
+        Source int64 `json:"source"`                   //来源 1TDriver2云上传3Telegram
+        Status int64 `json:"status"`                   //状态 1禁用2进行中3完成4失败
+        IsReport int64 `json:"is_report"`              //是否举报 1是2否
+    }
+    queryFileResp {
+        Total int64 `json:"page"` // 页码
+        AssetItems []*AssetItem `json:"asset_items"`
+    }
+)

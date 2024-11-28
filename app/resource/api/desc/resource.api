@@ -1,0 +1,76 @@
+syntax = "v1"
+
+info (
+	title:   "资源中心"
+	desc:    "资源中心"
+	author:  "sunruomeng"
+	Email:   "sunrm@zhiannet.com"
+	version: "v1.0.0"
+)
+
+@server (
+	prefix:     api/v1/resource
+	group:      resource
+	middleware: AuthMiddleware
+)
+service resource-api {
+	@doc "本地上传文件"
+	@handler upload
+	post /upload (uploadReq) returns (Response)
+
+	@doc "链接上传文件"
+	@handler cloudLink
+	post /cloudLink (cloudLinkReq) returns (Response)
+
+	@doc "云下载"
+	@handler cloudDownload
+	post /cloudDownload (cloudDownloadReq) returns (cloudDownloadResp)
+}
+
+@server (
+	prefix: api/v1/resource
+	group:  resource
+)
+service resource-api {
+	@doc "titan资源链接转发"
+	@handler relayTitan
+	get /relay (RelayTitanReq) returns (string)
+}
+
+type (
+	cloudDownloadReq {
+		Id int64 `json:"id"` //id
+	}
+	Response  {}
+	cloudLinkReq {
+		Id          int64    `json:"id,optional"` //id 上传失败传入
+		Pid         int64    `json:"pid"` //文件目录 默认从1开始
+		Source      int64    `json:"source"` //来源 1TDriver2云上传3Telegram
+		TransitType int64    `json:"transit_type,optional"` //上传类型 1云链接 2TG 3X 4TK 5种子
+		Link        []string `json:"link,optional"` //链接
+		AssetName   []string `json:"asset_name,optional"` //资源名称
+		AssetSize   []int64  `json:"asset_size,optional"` //资源大小
+	}
+	uploadReq {
+		Pid         int64  `json:"pid,optional"` //文件目录 默认从1开始
+		Flie        []byte `json:"file,optional"` //文件
+		Source      int64  `json:"source,optional"` //来源 1TDriver2云上传3Telegram
+		TransitType int64  `json:"transit_type,optional"` //上传类型 1上传文件夹2上传文件3云链接 4TG 5X 6TK 7种子
+		AssetName   string `json:"asset_name,optional"` //资源名称
+		AssetSize   int64  `json:"asset_size,optional"` //资源大小
+	}
+	cloudDownloadResp {
+		Flie      []byte `json:"file,optional"` //文件
+		AssetName string `json:"asset_name"` //资源名称
+		AssetSize int64  `json:"asset_size"` //资源大小
+	}
+)
+
+type (
+	RelayTitanReq {
+		UID int64  `form:"uid"`
+		CID string `form:"cid"`
+		IP  string `form:"ip,optional"`
+	}
+)
+

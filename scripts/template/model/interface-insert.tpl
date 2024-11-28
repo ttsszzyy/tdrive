@@ -1,0 +1,1 @@
+Insert(ctx context.Context, data *{{.upperStartCamelObject}}, s ...sqlx.Session) (sql.Result,error)

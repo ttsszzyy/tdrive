@@ -1,0 +1,25 @@
+syntax = "v1"
+
+type (
+    bingUserReq {
+        Puid int64 `json:"puid"` //绑定用户的uid
+    }
+    MessageItem {
+        Id int64 `json:"id"`
+        Uid int64 `json:"uid"`                      //用户id
+        Name string `json:"name"`                   //用户名
+        Puid int64 `json:"puid"`                    //绑定用户的uid
+        Remark string `json:"remark"`               //备注
+        Status int64 `json:"status"`                //状态 1进行中2已完成3拒绝绑定
+        CreatedTime int64 `json:"created_time"`
+        UpdatedTime int64 `json:"updated_time"`
+    }
+    messageListResp {
+        Total int64 `json:"total"`
+        Items []*MessageItem `json:"items"`
+    }
+    bingConfirmReq {
+        Id int64 `json:"id"`
+        Status int64 `json:"status"`                //状态 2完成绑定3拒绝绑定
+    }
+)
